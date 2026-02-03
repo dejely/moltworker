@@ -91,6 +91,12 @@ describe('buildEnvVars', () => {
     expect(result.CLAWDBOT_GATEWAY_TOKEN).toBe('my-token');
   });
 
+  it('skips gateway token when DEV_MODE is true', () => {
+    const env = createMockEnv({ DEV_MODE: 'true', MOLTBOT_GATEWAY_TOKEN: 'my-token' });
+    const result = buildEnvVars(env);
+    expect(result.CLAWDBOT_GATEWAY_TOKEN).toBeUndefined();
+  });
+
   it('includes all channel tokens when set', () => {
     const env = createMockEnv({
       TELEGRAM_BOT_TOKEN: 'tg-token',
